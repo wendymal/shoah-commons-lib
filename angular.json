@@ -2,5 +2,170 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "projects": {}
+  "projects": {
+    "shoah-commons": {
+      "root": "projects/shoah-commons",
+      "sourceRoot": "projects/shoah-commons/src",
+      "projectType": "library",
+      "prefix": "shoah",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/shoah-commons/tsconfig.lib.json",
+            "project": "projects/shoah-commons/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/shoah-commons/src/test.ts",
+            "tsConfig": "projects/shoah-commons/tsconfig.spec.json",
+            "karmaConfig": "projects/shoah-commons/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/shoah-commons/tsconfig.lib.json",
+              "projects/shoah-commons/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "shoah-commons-tester": {
+      "root": "projects/shoah-commons-tester/",
+      "sourceRoot": "projects/shoah-commons-tester/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/shoah-commons-tester",
+            "index": "projects/shoah-commons-tester/src/index.html",
+            "main": "projects/shoah-commons-tester/src/main.ts",
+            "polyfills": "projects/shoah-commons-tester/src/polyfills.ts",
+            "tsConfig": "projects/shoah-commons-tester/tsconfig.app.json",
+            "assets": [
+              "projects/shoah-commons-tester/src/favicon.ico",
+              "projects/shoah-commons-tester/src/assets"
+            ],
+            "styles": [
+              "projects/shoah-commons-tester/src/styles.css"
+            ],
+            "scripts": [],
+            "es5BrowserSupport": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/shoah-commons-tester/src/environments/environment.ts",
+                  "with": "projects/shoah-commons-tester/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "shoah-commons-tester:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "shoah-commons-tester:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "shoah-commons-tester:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/shoah-commons-tester/src/test.ts",
+            "polyfills": "projects/shoah-commons-tester/src/polyfills.ts",
+            "tsConfig": "projects/shoah-commons-tester/tsconfig.spec.json",
+            "karmaConfig": "projects/shoah-commons-tester/karma.conf.js",
+            "styles": [
+              "projects/shoah-commons-tester/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/shoah-commons-tester/src/favicon.ico",
+              "projects/shoah-commons-tester/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/shoah-commons-tester/tsconfig.app.json",
+              "projects/shoah-commons-tester/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "shoah-commons-tester-e2e": {
+      "root": "projects/shoah-commons-tester-e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/shoah-commons-tester-e2e/protractor.conf.js",
+            "devServerTarget": "shoah-commons-tester:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "shoah-commons-tester:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/shoah-commons-tester-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "shoah-commons"
 }
