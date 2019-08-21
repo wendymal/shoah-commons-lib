@@ -5,10 +5,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 
 export class TimeAgoPipe implements PipeTransform {
-  transform(value: any, args?: any): any {
+  transform(value: any): any {
     if (value) {
-      const seconds = Math.floor((+new Date() - +new Date(value)) / 1000);
-      if (seconds < 29) // less than 30 seconds ago will show as 'Just now'
+      let seconds;
+      Number.isInteger(value) ? seconds = value : seconds = Math.floor((+new Date() - +new Date(value)) / 1000); // + forces the epoch#
+      if (seconds < 30) // less than 30 seconds ago will show as 'Just now'
         return 'Just now';
       const intervals = { // n coverted to secs
         'year': 31536000,

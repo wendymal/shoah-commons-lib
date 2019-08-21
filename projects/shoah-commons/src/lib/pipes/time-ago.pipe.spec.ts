@@ -18,8 +18,13 @@ describe('TimeAgoPipe', () => {
     })
 
     it('should return input value', () => {
-      const actual = pipe.transform('');
-      expect(actual).toEqual('');
+      const actual = pipe.transform('input');
+      expect(actual).toEqual('input');
+    })
+
+    it('should return value from epoch input', () => {
+      const actual = pipe.transform(604800);
+      expect(actual).toEqual('1 week ago');
     })
   })
 
